@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+
  
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -16,12 +17,16 @@ const Login = () => {
                 password: password
             });
             history.push("/dashboard");
+    
         } catch (error) {
             if (error.response) {
                 setMsg(error.response.data.msg);
             }
         }
     }
+    /*if () {
+        return <Navigate replace to="/dashboard" />;
+    }*/
  
     return (
         <section>

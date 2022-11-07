@@ -5,6 +5,7 @@ import jwt_decode from "jwt-decode";
 import { useNavigate } from 'react-router-dom';
  
 const Dashboard = () => {
+    const [authenticated, setauthenticated] = useState(null);
     const [name, setName] = useState('');
     const [token, setToken] = useState('');
     const [expire, setExpire] = useState('');
@@ -55,10 +56,31 @@ const Dashboard = () => {
         });
         setUsers(response.data);
     }
- 
+    useEffect(() => {
+        const loggedInUser = localStorage.getItem("authenticated");
+        if (loggedInUser) {
+          setauthenticated(loggedInUser);
+        }
+      }, []);
+     /* if (!authenticated) {
+        return <Navigate replace to="/" />;
+      } else {*/
+      const Logout = async () => {
+        try {
+            await axios.delete('http://localhost:5000/logout');
+            history.push("/");
+        } catch (error) {
+            console.log(error);
+        }
+      }
     return (
         <div>
             <h1>Welcome Back: {name}</h1>
+            <div>
+                 <button onClick={Logout}>
+                    Log Out
+                 </button>
+            </div>
             <table>
                 <thead>
                     <tr>
@@ -81,5 +103,6 @@ const Dashboard = () => {
         </div>
     )
 }
+//}
  
 export default Dashboard
