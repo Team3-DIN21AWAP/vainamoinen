@@ -1,18 +1,15 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import jwt_decode from "jwt-decode";
 import { useNavigate } from 'react-router-dom';
+import { Navigate } from "react-router-dom";
  
 const Dashboard = () => {
-    const [authenticated, setauthenticated] = useState(null);
     const [name, setName] = useState('');
     const [token, setToken] = useState('');
     const [expire, setExpire] = useState('');
     const [users, setUsers] = useState([]);
     const history = useNavigate();
-    //const [authenticated, setauthenticated] = useState(
-        //localStorage.getItem(localStorage.getItem("authenticated") || false)
  
     useEffect(() => {
         refreshToken();
@@ -58,21 +55,18 @@ const Dashboard = () => {
         });
         setUsers(response.data);
     }
-    useEffect(() => {
-        const loggedInUser = localStorage.getItem("authenticated");
-        if (loggedInUser) {
-          setauthenticated(loggedInUser);
-        }
-      }, []);
     
-      const Logout = async () => {
-        try {
-            await axios.delete('http://localhost:5000/logout');
-            history.push("/");
-        } catch (error) {
-            console.log(error);
+        
+        const Logout = async () => {
+            try {
+                await axios.delete('http://localhost:5000/logout');
+                history.push("/");
+            } catch (error) {
+                console.log(error);
+            }
+            localStorage.setItem("authenticated", false);
         }
-      }
+
     return (
         <div>
             <h1>Welcome Back: {name}</h1>
@@ -102,7 +96,7 @@ const Dashboard = () => {
             </table>
         </div>
     )
-}
-//}
+};
+
  
 export default Dashboard
