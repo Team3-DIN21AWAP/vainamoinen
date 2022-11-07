@@ -15,18 +15,30 @@ export const getUsers = async(req, res) => {
  
 export const Register = async(req, res) => {
     const { name, email, password, confPassword } = req.body;
-    if(password !== confPassword) return res.status(400).json({msg: "Password and Confirm Password do not match"});
-    const salt = await bcrypt.genSalt();
-    const hashPassword = await bcrypt.hash(password, salt);
-    try {
-        await Users.create({
-            name: name,
-            email: email,
-            password: hashPassword
-        });
-        res.json({msg: "Registration Successful"});
-    } catch (error) {
-        console.log(error);
+    if(email === ""){
+        res.status(400).json({msg: "Failed. Invalid query."});
+        return;
+    }
+    const existing = await Users.findAll({attributes:['email'], where:{email: email}});
+    await existing;
+    if(existing.length===0){
+        if(password !== confPassword){
+            return res.status(400).json({msg: "Password and Confirm Password do not match"});
+        } 
+        const salt = await bcrypt.genSalt();
+        const hashPassword = await bcrypt.hash(password, salt);
+        try {
+            await Users.create({
+                name: name,
+                email: email,
+                password: hashPassword
+            });
+            res.status(200).json({msg: "Registration Successful"});
+        } catch (error) {
+            console.log(error);
+        }
+    }else{
+        res.status(400).json({msg: "Failed. Email exists."});
     }
 }
  

@@ -57,9 +57,9 @@ const Dashboard = () => {
     }
  
     return (
-        <div className="container mt-5">
+        <div>
             <h1>Welcome Back: {name}</h1>
-            <table className="table is-striped is-fullwidth">
+            <table>
                 <thead>
                     <tr>
                         <th>No</th>
