@@ -1,13 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+//import React, { useState } from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
- 
+
 const Login = () => {
+    const Navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [msg, setMsg] = useState('');
     const history = useNavigate();
+    const [authenticated, setauthenticated] = useState(null);
  
     const Auth = async (e) => {
         e.preventDefault();
@@ -24,9 +27,13 @@ const Login = () => {
             }
         }
     }
-    /*if () {
-        return <Navigate replace to="/dashboard" />;
-    }*/
+    useEffect(() => {
+        const loggedInUser = localStorage.getItem("authenticated");
+        if (loggedInUser) {
+          setauthenticated(loggedInUser);
+          return <Navigate replace to="/dashboard" />;
+        }
+      }, []);
  
     return (
         <section>

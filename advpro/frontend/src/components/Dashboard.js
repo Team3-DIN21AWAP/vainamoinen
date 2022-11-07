@@ -11,6 +11,8 @@ const Dashboard = () => {
     const [expire, setExpire] = useState('');
     const [users, setUsers] = useState([]);
     const history = useNavigate();
+    //const [authenticated, setauthenticated] = useState(
+        //localStorage.getItem(localStorage.getItem("authenticated") || false)
  
     useEffect(() => {
         refreshToken();
@@ -62,9 +64,7 @@ const Dashboard = () => {
           setauthenticated(loggedInUser);
         }
       }, []);
-     /* if (!authenticated) {
-        return <Navigate replace to="/" />;
-      } else {*/
+    
       const Logout = async () => {
         try {
             await axios.delete('http://localhost:5000/logout');
