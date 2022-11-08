@@ -2,20 +2,21 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import jwt_decode from "jwt-decode";
 import { useNavigate } from 'react-router-dom';
-import { Navigate } from "react-router-dom";
+import useCookie from 'react-use-cookie';
  
 const Dashboard = () => {
     const [name, setName] = useState('');
-    const [token, setToken] = useState('');
+    const [token, setToken] = useCookie('token', '0');
     const [expire, setExpire] = useState('');
     const [users, setUsers] = useState([]);
-    const history = useNavigate();
- 
+    const navigate = useNavigate();
+    
     useEffect(() => {
         refreshToken();
         getUsers();
+        
     }, []);
- 
+    
     const refreshToken = async () => {
         try {
             const response = await axios.get('http://localhost:5000/token');
@@ -25,7 +26,7 @@ const Dashboard = () => {
             setExpire(decoded.exp);
         } catch (error) {
             if (error.response) {
-                history.push("/");
+                navigate("/")
             }
         }
     }
@@ -60,12 +61,13 @@ const Dashboard = () => {
         const Logout = async () => {
             try {
                 await axios.delete('http://localhost:5000/logout');
-                history.push("/");
+                navigate("/")
             } catch (error) {
                 console.log(error);
             }
-            localStorage.setItem("authenticated", false);
+            setToken(null);
         }
+
 
     return (
         <div>

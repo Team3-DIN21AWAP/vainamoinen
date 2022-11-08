@@ -3,12 +3,11 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 
-
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [msg, setMsg] = useState('');
-    const history = useNavigate();
+    const navigate = useNavigate();
     
     const Auth = async (e) => {
         e.preventDefault();
@@ -17,7 +16,7 @@ const Login = () => {
                 email: email,
                 password: password
             });
-            history.push("/dashboard");
+            navigate("/dashboard");
             
         } catch (error) {
             if (error.response) {
