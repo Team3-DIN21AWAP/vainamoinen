@@ -8,7 +8,7 @@ const Register = () => {
     const [password, setPassword] = useState('');
     const [confPassword, setConfPassword] = useState('');
     const [msg, setMsg] = useState('');
-    const history = useNavigate();
+    const navigate = useNavigate();
  
     const Register = async (e) => {
         e.preventDefault();
@@ -19,7 +19,7 @@ const Register = () => {
                     password: password,
                     confPassword: confPassword
                 });
-                history.push("/");
+                navigate("/")
             } catch (error) {
                 if (error.response) {
                     console.log(error.response.data.msg);
