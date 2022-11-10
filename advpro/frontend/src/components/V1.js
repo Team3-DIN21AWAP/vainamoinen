@@ -57,6 +57,7 @@ const V1 = () => {
           },
         ],
       });
+    
     const navigate = useNavigate();
     
         useEffect(() => {
@@ -108,20 +109,39 @@ const V1 = () => {
                 labarr.push(response.data[x].time);
                 valarr.push(response.data[x].anomalyC);
             }
+            const monthly = await axiosJWT.get('http://localhost:5000/v1gm',{ 
+                headers: {
+                Authorization: `Bearer ${token}`
+                }
+            });
+            var labarrM = [];
+            var valarrM = [];
+            for(var x=0; x<monthly.data.length; ++x){
+                labarrM.push(monthly.data[x].time);
+                valarrM.push(monthly.data[x].anomalyC);
+            }
             var chartDatat = {
                 labels: labarr,
                 datasets: [
                   {
-                    label: 'Dataset 1',
+                    label: 'Annual',
                     data: labarr.map( (value, index) => valarr[index] ),
                     borderColor: 'rgb(255, 99, 132)',
                     backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                  },
+               
+                  {
+                    label: 'Monthly',
+                    data: labarrM.map( (value, index) => valarrM[index] ),
+                    borderColor: 'rgb(53, 162, 235)',
+                    backgroundColor: 'rgba(53, 162, 235, 0.5)',
                   },
                 ],
               };
             setChart(chartDatat);
             
         }
+        
     
         const getUsers = async () => {
             const response = await axiosJWT.get('http://localhost:5000/users', {
