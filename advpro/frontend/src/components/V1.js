@@ -97,7 +97,7 @@ const V1 = () => {
         });
   
         const getAnnualData = async () => {
-            const response = await axiosJWT.get('http://localhost:5000/v1a',{ 
+            const response = await axiosJWT.get('http://localhost:5000/v1ga',{ 
                 headers: {
                 Authorization: `Bearer ${token}`
                 }
