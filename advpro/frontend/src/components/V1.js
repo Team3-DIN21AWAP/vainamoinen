@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect} from "react";
 import axios from 'axios';
 import jwt_decode from "jwt-decode";
 import { useNavigate } from 'react-router-dom';
@@ -50,10 +50,10 @@ const V1 = () => {
         labels: [""],
         datasets: [
           {
-            label: 'Dataset 1',
+            label: '',
             data: [],
-            borderColor: 'rgb(255, 99, 132)',
-            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            borderColor: '',
+            backgroundColor: '',
           },
         ],
       });
@@ -105,7 +105,7 @@ const V1 = () => {
             });
             var labarr = [];
             var valarr = [];
-            for(var x=0; x<response.data.length; ++x){
+            for( x=0; x<response.data.length; ++x){
                 labarr.push(response.data[x].time);
                 valarr.push(response.data[x].anomalyC);
             }
