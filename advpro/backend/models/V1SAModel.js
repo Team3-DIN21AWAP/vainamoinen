@@ -3,7 +3,7 @@ import db from "../config/Database.js";
  
 const { DataTypes } = Sequelize;
  
-const V1GM = db.define('v1g_monthly',{
+const V1SA = db.define('v1s_annual',{
     time:{
         type: DataTypes.DATE,
         allowNull: false
@@ -21,4 +21,4 @@ const V1GM = db.define('v1g_monthly',{
     await db.sync();
 })();
  
-export default V1GM;
+export default V1SA;
