@@ -3,12 +3,8 @@ import Dashboard from "./components/Dashboard";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import V1 from "./components/V1";
-
-
  
 function App() {
-
-  
   return (
     <Router>
       <Routes>
