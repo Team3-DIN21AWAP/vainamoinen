@@ -1,9 +1,12 @@
 import { useState, useEffect} from "react";
 import axios from 'axios';
 import jwt_decode from "jwt-decode";
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import useCookie from 'react-use-cookie';
 import Moment from 'moment';
+import {Icon} from "react-3d-icons";
+import {kuma} from "react-3d-icons";
+import Select from "react-dropdown-select";
 
 import {
     Chart as ChartJS,
@@ -47,6 +50,7 @@ const V1 = () => {
     const [token, setToken] = useCookie('token', '0');
     const [expire, setExpire] = useState('');
     const [users, setUsers] = useState([]);
+    const [series, setSeries] = useState([]);
     const [chartData, setChart] = useState({
         labels: [],
         datasets: [
@@ -58,7 +62,7 @@ const V1 = () => {
           },
         ],
       });
-      const [chart2Data, setChart2] = useState({
+     /* const [chart2Data, setChart2] = useState({
         labels: [],
         datasets: [
           {
@@ -101,7 +105,7 @@ const V1 = () => {
             backgroundColor: '',
           },
         ],
-      });
+      });*/
     
     const navigate = useNavigate();
     
@@ -137,69 +141,80 @@ const V1 = () => {
         }, (error) => {
             return Promise.reject(error);
         });
-  
+
         const getGlobalAnnualData = async () => {
             Moment.locale('en');
-            const response = await axiosJWT.get('http://localhost:5000/v1ga',{ 
-                headers: {
-                Authorization: `Bearer ${token}`
-                }
-            });
-            var labarr = [];
-            var valarr = [];
-            var labGM = [];
-            var valGM = [];
-
-            for( var x=0; x<response.data.length; ++x){
-                labarr.push(response.data[x].time);
-                valarr.push(response.data[x].anomalyC);
+            for (let  i= 0; i < series.length; i++) {
+              const element = series[i].id;
+              console.log(element);
             }
-            const monthly = await axiosJWT.get('http://localhost:5000/v1gm',{ 
-                headers: {
-                Authorization: `Bearer ${token}`
-                }
-            });
-        
-        
-            for(x=0; x<monthly.data.length; ++x){
-                labGM.push(Moment(monthly.data[x].time).format('YYYY'));
-                valGM.push(monthly.data[x].anomalyC);
-            }
-            var chartDatat = {
-                labels: labGM,
-                datasets: [
-                  {
-                    label: 'Annual',
-                    data: labarr.map( (value, index) => valarr[index] ),
-                    borderColor: 'rgb(255, 99, 132)',
-                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                  },
-               
-                  {
-                    label: 'Monthly',
-                    data: labGM.map( (value, index) => valGM[index] ),
-                    borderColor: 'rgb(53, 162, 235)',
-                    backgroundColor: 'rgba(53, 162, 235, 0.5)',
+                const response = await axiosJWT.get('http://localhost:5000/v1ga',{ 
+                  headers: {
+                  Authorization: `Bearer ${token}`
                   }
-                ],
-              };
-            setChart(chartDatat);
-            
-        }
-        const getNorthAnnualData = async () => {
-            Moment.locale('en');
-            const response = await axiosJWT.get('http://localhost:5000/v1na',{ 
-                headers: {
-                Authorization: `Bearer ${token}`
+                });
+                var labarr = [];
+                var valarr = [];
+                var labGM = [];
+                var valGM = [];
+  
+                for( var x=0; x<response.data.length; ++x){
+                    labarr.push(response.data[x].time);
+                    valarr.push(response.data[x].anomalyC);
                 }
-            });
-            var labarr = [];
-            var valarr = [];
-    
-
-            for( var x=0; x<response.data.length; ++x){
-                labarr.push(Moment (response.data[x].time).format('YYYY'));
-                valarr.push(response.data[x].anomalyC);
+              const monthly = await axiosJWT.get('http://localhost:5000/v1gm',{ 
+                  headers: {
+                  Authorization: `Bearer ${token}`
+                  }
+              });
+          
+          
+              for(x=0; x<monthly.data.length; ++x){
+                  labGM.push(Moment(monthly.data[x].time).format('YYYY'));
+                  valGM.push(monthly.data[x].anomalyC);
+              }
+              
+            
+              var chartDatat = {
+                  labels: labGM,
+                  datasets: [
+                    {
+                      label: 'Annual',
+                      data: labarr.map( (value, index) => valarr[index] ),
+                      borderColor: 'rgb(255, 99, 132)',
+                      backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                    },
+                 
+                    {
+                      label: 'Monthly',
+                      data: labGM.map( (value, index) => valGM[index] ),
+                      borderColor: 'rgb(53, 162, 235)',
+                      backgroundColor: 'rgba(53, 162, 235, 0.5)',
+                    }
+                  ],
+                };
+              setChart(chartDatat);
+        }
+              
+          
+/*
+          const getNorthAnnualData = async () => {
+              Moment.locale('en');
+              const response = await axiosJWT.get('http://localhost:5000/v1na',{ 
+                  headers: {
+                  Authorization: `Bearer ${token}`
+                  }
+              });
+              var labarr = [];
+              var valarr = [];
+      
+  
+              for( var x=0; x<response.data.length; ++x){
+                  labarr.push(Moment (response.data[x].time).format('YYYY'));
+                  valarr.push(response.data[x].anomalyC);
+              } 
+            
+            
             }
            
             var chartDatat = {
@@ -212,8 +227,8 @@ const V1 = () => {
                     backgroundColor: 'rgba(255, 99, 132, 0.5)',
                   },
                 ],
-              };
-            setChart2(chartDatat);
+              };*/
+          /*  setChart2(chartDatat);
             
         }
         const getNorthMonthlylData = async () => {
@@ -305,9 +320,8 @@ const V1 = () => {
               };
             setChart6(chartDatat);
         
-        }
+        }*/
 
-    
         const getUsers = async () => {
             const response = await axiosJWT.get('http://localhost:5000/users', {
                 headers: {
@@ -317,7 +331,6 @@ const V1 = () => {
             setUsers(response.data);
         }
         
-            
         const Logout = async () => {
                 try {
                     await axios.delete('http://localhost:5000/logout');
@@ -326,48 +339,68 @@ const V1 = () => {
                     console.log(error);
                 }
         }
+        const [isHovering, setIsHovering] = useState(false);
+
+        const handleMouseOver = () => {
+          setIsHovering(true);
+        };
+      
+        const handleMouseOut = () => {
+          setIsHovering(false);
+        };
 
     useEffect(() => {
          refreshToken();
          getUsers();
          getGlobalAnnualData();
-         getNorthAnnualData();
-         getNorthMonthlylData();
-         getSouthMonthlylData();
-         getSouthAnnualData();
+         console.log(series);
+         //getNorthAnnualData();
+         //getNorthMonthlylData();
+        // getSouthMonthlylData();
+        // getSouthAnnualData();
     }, []);
 
-
         return (
-           
-                <><><h1>Welcome Back: {name}</h1>
+            <><div onMouseOver={handleMouseOver} 
+                   onMouseOut={handleMouseOut} 
+                   style={{ height: "150px", width: "200px" }}>
+            <Icon file={kuma} color={"#1DA1F2"} scale={10} 
+                   style={{ height: "100px", width: "100px" }} />
+             {isHovering && (
+          <div>
+            {name}
+             <button onClick={Logout}>Log Out</button>
+          </div>
+        )}
+            </div><><>
+            <Select
+              multi
+              options={[{
+                  "id": "1",
+                  "series": "Global (NH+SH)/2",
+                },
+                {
+                  "id": "2",
+                  "series": "Northern hemisphere"
+                },
+                {
+                  "id": "3",
+                  "series": "Southern hemisphere"
+                }]}
+              valueField="id"
+              labelField="series"
+              values={[]}
+              onChange={(value) =>
+                {setSeries(value); getGlobalAnnualData();}
+      }
+    />
                 <Line options={options} data={chartData} />
                 <div>
-                <Line options={options} data={chart2Data} />
-                <Line options={options} data={chart3Data} />
-                <Line options={options} data={chart5Data} />
-                <Line options={options} data={chart6Data} />
-                    <button onClick={Logout}>
-                        Log Out</button>
-                </div><table>
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {users.map((user, index) => (
-                            <tr key={user.id}>
-                                <td>{index + 1}</td>
-                                <td>{user.name}</td>
-                                <td>{user.email}</td>
-                            </tr>
-                        ))}
-
-                    </tbody>
-                </table></><div></div></>  
+                     {/*<Line options={options} data={chart2Data} />
+                   <Line options={options} data={chart3Data} />
+                    <Line options={options} data={chart5Data} />
+                     <Line options={options} data={chart6Data} />*/}
+                </div></><div></div></></>  
         )
 };
 
