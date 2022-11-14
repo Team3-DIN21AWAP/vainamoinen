@@ -144,10 +144,7 @@ const V1 = () => {
 
         const getGlobalAnnualData = async () => {
             Moment.locale('en');
-            for (let  i= 0; i < series.length; i++) {
-              const element = series[i].id;
-              console.log(element);
-            }
+            
                 const response = await axiosJWT.get('http://localhost:5000/v1ga',{ 
                   headers: {
                   Authorization: `Bearer ${token}`
@@ -162,6 +159,9 @@ const V1 = () => {
                     labarr.push(response.data[x].time);
                     valarr.push(response.data[x].anomalyC);
                 }
+                for (let  i= 0; i < series.length; i++) {
+                  const element = series[i].id;
+                  console.log(element);
               const monthly = await axiosJWT.get('http://localhost:5000/v1gm',{ 
                   headers: {
                   Authorization: `Bearer ${token}`
@@ -174,7 +174,7 @@ const V1 = () => {
                   valGM.push(monthly.data[x].anomalyC);
               }
               
-            
+              }
               var chartDatat = {
                   labels: labGM,
                   datasets: [
