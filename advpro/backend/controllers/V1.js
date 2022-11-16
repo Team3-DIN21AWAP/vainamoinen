@@ -4,6 +4,7 @@ import V1NM from "../models/V1NMModel.js";
 import V1NA from "../models/V1NAModel.js";
 import V1SM from "../models/V1SMModel.js";
 import V1SA from "../models/V1SAModel.js";
+import V2 from "../models/V2Model.js";
 
 export const getV1_GA = async(req, res) => {
     try {
@@ -62,6 +63,16 @@ export const getV1_SA = async(req, res) => {
             attributes:['time','anomalyC']
         });
         res.json(v1_SA);
+    } catch (error) {
+        console.log(error);
+    }
+}
+export const getV2 = async(req, res) => {
+    try {
+        const v_2 = await V2.findAll({
+            attributes:['time','anomalyC']
+        });
+        res.json(v_2);
     } catch (error) {
         console.log(error);
     }

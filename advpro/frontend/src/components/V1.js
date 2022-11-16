@@ -100,7 +100,13 @@ const V1 = () => {
       headers: {
                 Authorization: `Bearer ${token}`
               }
-    });       
+    });  
+    const V2 = await axiosJWT.get('http://localhost:5000/v2',{ 
+      headers: {
+                Authorization: `Bearer ${token}`
+              }
+    });
+    console.log(V2)     
             
     const data = {
         datasets: [
@@ -178,8 +184,18 @@ const V1 = () => {
                       pointRadius: 1,
                       borderColor: 'rgb(53, 162, 135)',
                       backgroundColor: 'rgba(53, 162, 135, 0.5)',
+                    },
+                    {
+                      label: '2000 y ...',
+                      data: V2.data,
+                      parsing: {
+                        xAxisKey: "time",
+                        yAxisKey: "anomalyC",
+                      },
+                      pointRadius: 1,
+                      borderColor: 'rgb(353, 362, 35)',
+                      backgroundColor: 'rgba(353, 362, 35, 0.5)',
                     }
-
                   ],
                 };
 
