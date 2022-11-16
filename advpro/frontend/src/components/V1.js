@@ -100,123 +100,86 @@ const V1 = () => {
       headers: {
                 Authorization: `Bearer ${token}`
               }
-    });
-
-    var GAX = [];
-    var GAY = [];
-    var GMX = [];
-    var GMY = [];
-    var NMX = [];
-    var NMY = [];
-    var NAX = [];
-    var NAY = [];
-    var SMX = [];
-    var SMY = [];
-    var SAX = [];
-    var SAY = [];
-
-    for( var x=0; x<globalAnnual.data.length; ++x){
-      GAX.push(globalAnnual.data[x].time);
-      GAY.push(globalAnnual.data[x].anomalyC);
-    }
-          
-    for(x=0; x<globalMonthly.data.length; ++x){
-      GMX.push(globalMonthly.data[x].time);
-      GMY.push(globalMonthly.data[x].anomalyC);
-    }
-    for( var x=0; x<northAnnual.data.length; ++x){
-      NAX.push(northAnnual.data[x].time);
-      NAY.push(northAnnual.data[x].anomalyC);
-    }
-          
-    for(x=0; x<northMonthly.data.length; ++x){
-      NMX.push(northMonthly.data[x].time);
-      NMY.push(northMonthly.data[x].anomalyC);
-    }
-    for( var x=0; x<northAnnual.data.length; ++x){
-      NAX.push(northAnnual.data[x].time);
-      NAY.push(northAnnual.data[x].anomalyC);
-    }
-          
-    for(x=0; x<southMonthly.data.length; ++x){
-      SMX.push(southMonthly.data[x].time);
-      SMY.push(southMonthly.data[x].anomalyC);
-    }
-    for(x=0; x<southAnnual.data.length; ++x){
-      SAX.push(southAnnual.data[x].time);
-      SAY.push(southAnnual.data[x].anomalyC);
-    }
+    });       
             
     const data = {
-        labels: GAX,GMX, NMX, NAX, SAX, SMX,
-      
         datasets: [
                     {
-                      label: 'Golbal Annual',
-                      data: GAX.map( (value, index) => GAY[index] ),
+                      label: 'Global (NH+SH)/2 annual',
+                      data: globalAnnual.data,
+                      parsing: {
+                        xAxisKey: "time",
+                        yAxisKey: "anomalyC",
+                      },
                       borderColor: 'rgb(255, 99, 132)',
                       backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                      parsing: {
-                        xAxisKey: "time",
-                        yAxisKey: "value",
-                      },
                       pointRadius: 1,
+                      options: {
+                        scales: {
+                          x: {
+                              type: 'time',
+                              time: {
+                              unit: 'month'
+                            }},
+                        }
+                      }
                     },
                     {
-                      label: 'Global Monthly',
-                      data: GMX.map( (value, index) => GMY[index] ),
+                      label: 'Global (NH+SH)/2 monthly',
+                      data: globalMonthly.data,
+                      parsing: {
+                        xAxisKey: "time",
+                        yAxisKey: "anomalyC",
+                      },
+                      pointRadius: 1,
                       borderColor: 'rgb(153, 162, 235)',
-                      backgroundColor: 'rgba(153, 162, 235, 0.5)',
-                      parsing: {
-                        xAxisKey: "time",
-                        yAxisKey: "value",
-                      },
-                      pointRadius: 1,
+                      backgroundColor: 'rgba(153, 162, 235, 0.5)'
                     },
                     {
-                      label: 'North Annual',
-                      data: NAX.map( (value, index) => NAY[index] ),
+                      label: 'Northern hemisphere annual',
+                      data: northAnnual.data,
+                      parsing: {
+                        xAxisKey: "time",
+                        yAxisKey: "anomalyC",
+                      },
+                      pointRadius: 1,
                       borderColor: 'rgb(253, 62, 235)',
                       backgroundColor: 'rgba(253, 62, 235, 0.5)',
-                      parsing: {
-                        xAxisKey: "time",
-                        yAxisKey: "value",
-                      },
-                      pointRadius: 1,
                     },
                     {
-                      label: 'North Monthly',
-                      data: NMX.map( (value, index) => NMY[index] ),
+                      label: 'Northern hemisphere monthly',
+                      data: northMonthly.data,
+                      parsing: {
+                        xAxisKey: "time",
+                        yAxisKey: "anomalyC",
+                      },
+                      pointRadius: 1,
                       borderColor: 'rgb(253, 162, 35)',
                       backgroundColor: 'rgba(253, 162, 35, 0.5)',
-                      parsing: {
-                        xAxisKey: "time",
-                        yAxisKey: "value",
-                      },
-                      pointRadius: 1,
                     },
                     {
-                      label: 'South Monthly',
-                      data: SMX.map( (value, index) => SMY[index] ),
+                      label: 'Southern hemisphere monthly',
+                      data: southMonthly.data,
                       borderColor: 'rgb(53, 162, 235)',
-                      backgroundColor: 'rgba(53, 162, 235, 0.5)',
                       parsing: {
                         xAxisKey: "time",
-                        yAxisKey: "value",
+                        yAxisKey: "anomalyC",
                       },
                       pointRadius: 1,
+                      backgroundColor: 'rgba(53, 162, 235, 0.5)',
                     },
                     {
-                      label: 'South Annual',
-                      data: SAX.map( (value, index) => SAY[index] ),
+                      label: 'Southern hemisphere annual',
+                      data: southAnnual.data,
+                      parsing: {
+                        xAxisKey: "time",
+                        yAxisKey: "anomalyC",
+                      },
+                      pointRadius: 1,
                       borderColor: 'rgb(53, 162, 135)',
                       backgroundColor: 'rgba(53, 162, 135, 0.5)',
-                      parsing: {
-                        xAxisKey: "time",
-                        yAxisKey: "value",
-                      },
-                      pointRadius: 1,
                     }
+
                   ],
                 };
 
@@ -263,16 +226,19 @@ const V1 = () => {
         },
         title: {
           display: true,
-          text: "Time Line Graph ",
+          text: "HadCRUT5"
         },
       },
       scales: {
         x: {
           type: "time",
           time: {
-            unit: "month",
-          },
+            displayFormats: {year:"YYYY"},
+            unit: "month"
+            
+          }
         },
+        
         yAxis: {
           type: "linear",
         },
