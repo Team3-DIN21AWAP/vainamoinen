@@ -1,7 +1,7 @@
 import express from "express";
 import { getUsers, Register, Login, Logout } from "../controllers/Users.js";
 import { verifyToken } from "../middleware/VerifyToken.js";
-import { getV1_GA, getV1_GM, getV1_SM, getV1_SA, getV1_NM, getV1_NA } from "../controllers/V1.js";
+import { getV1_GA, getV1_GM, getV1_SM, getV1_SA, getV1_NM, getV1_NA, getV2 } from "../controllers/V1.js";
 import { refreshToken } from "../controllers/RefreshToken.js";
  
 const router = express.Router();
@@ -17,5 +17,6 @@ router.get('/v1nm', getV1_NM);
 router.get('/v1sa', getV1_SA);
 router.get('/v1na', getV1_NA);
 router.delete('/logout', Logout);
+router.get('/v2', getV2);
  
 export default router;

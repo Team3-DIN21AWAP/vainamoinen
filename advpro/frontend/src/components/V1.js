@@ -1,373 +1,283 @@
 import { useState, useEffect} from "react";
 import axios from 'axios';
 import jwt_decode from "jwt-decode";
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import useCookie from 'react-use-cookie';
 import Moment from 'moment';
+import {Icon} from "react-3d-icons";
+import {kuma} from "react-3d-icons";
+import Chart from 'chart.js/auto';
+import { Line } from "react-chartjs-2";
+import "chartjs-adapter-luxon";
 
-import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend,
-  } from 'chart.js';
-  import { Line } from 'react-chartjs-2';
-  
-  
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend
-  );
-
-  export const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top',
-      },
-      title: {
-        display: true,
-        text: 'Chart.js Line Chart',
-      },
-    },
-  };
-  
   
 const V1 = () => {
-    const [name, setName] = useState('');
-    const [token, setToken] = useCookie('token', '0');
-    const [expire, setExpire] = useState('');
-    const [users, setUsers] = useState([]);
-    const [chartData, setChart] = useState({
-        labels: [],
-        datasets: [
-          {
-            label: '',
-            data: [],
-            borderColor: '',
-            backgroundColor: '',
-          },
-        ],
-      });
-      const [chart2Data, setChart2] = useState({
-        labels: [],
-        datasets: [
-          {
-            label: '',
-            data: [],
-            borderColor: '',
-            backgroundColor: '',
-          },
-        ],
-      });
-      const [chart3Data, setChart3] = useState({
-        labels: [],
-        datasets: [
-          {
-            label: '',
-            data: [],
-            borderColor: '',
-            backgroundColor: '',
-          },
-        ],
-      });
-      const [chart5Data, setChart5] = useState({
-        labels: [],
-        datasets: [
-          {
-            label: '',
-            data: [],
-            borderColor: '',
-            backgroundColor: '',
-          },
-        ],
-      });
-      const [chart6Data, setChart6] = useState({
-        labels: [],
-        datasets: [
-          {
-            label: '',
-            data: [],
-            borderColor: '',
-            backgroundColor: '',
-          },
-        ],
-      });
+  const [name, setName] = useState('');
+  const [token, setToken] = useCookie('token', '0');
+  const [expire, setExpire] = useState('');
+  const [users, setUsers] = useState([]);
+  const [chartData, setChart] = useState({
+    datasets: [
+    {
+      label: '',
+      data: [],
+      borderColor: '',
+      backgroundColor: '',
+      parsing: {
+        xAxisKey: "time",
+        yAxisKey: "value",
+      },
+       pointRadius: 1,
+     }
+    ],
+  });
     
-    const navigate = useNavigate();
-    
-
+  const navigate = useNavigate();
         
-        const refreshToken = async () => {
-            try {
-                const response = await axios.get('http://localhost:5000/token');
-                setToken(response.data.accessToken);
-                const decoded = jwt_decode(response.data.accessToken);
-                setName(decoded.name);
-                setExpire(decoded.exp);
-            } catch (error) {
-                if (error.response) {
-                    navigate("/")
-                }
-            }
+  const refreshToken = async () => {
+     try {
+          const response = await axios.get('http://localhost:5000/token');
+          setToken(response.data.accessToken);
+          const decoded = jwt_decode(response.data.accessToken);
+          setName(decoded.name);
+          setExpire(decoded.exp);
+        } catch (error) {
+            if (error.response) {
+                navigate("/")
+             }
         }
+      }
     
-        const axiosJWT = axios.create();
+  const axiosJWT = axios.create();
     
-        axiosJWT.interceptors.request.use(async (config) => {
-            const currentDate = new Date();
-            if (expire * 1000 < currentDate.getTime()) {
-                const response = await axios.get('http://localhost:5000/token');
-                config.headers.Authorization = `Bearer ${response.data.accessToken}`;
-                setToken(response.data.accessToken);
-                const decoded = jwt_decode(response.data.accessToken);
-                setName(decoded.name);
-                setExpire(decoded.exp);
-            }
-            return config;
-        }, (error) => {
-            return Promise.reject(error);
-        });
-  
-        const getGlobalAnnualData = async () => {
-            Moment.locale('en');
-            const response = await axiosJWT.get('http://localhost:5000/v1ga',{ 
-                headers: {
-                Authorization: `Bearer ${token}`
-                }
-            });
-            var labarr = [];
-            var valarr = [];
-            var labGM = [];
-            var valGM = [];
+  axiosJWT.interceptors.request.use(async (config) => {
+    const currentDate = new Date();
+    if (expire * 1000 < currentDate.getTime()) {
+      const response = await axios.get('http://localhost:5000/token');
+      config.headers.Authorization = `Bearer ${response.data.accessToken}`;
+      setToken(response.data.accessToken);
+      const decoded = jwt_decode(response.data.accessToken);
+      setName(decoded.name);
+      setExpire(decoded.exp);
+    }
+    return config;
+  }, (error) => {
+      return Promise.reject(error);
+  });
 
-            for( var x=0; x<response.data.length; ++x){
-                labarr.push(response.data[x].time);
-                valarr.push(response.data[x].anomalyC);
-            }
-            const monthly = await axiosJWT.get('http://localhost:5000/v1gm',{ 
-                headers: {
-                Authorization: `Bearer ${token}`
+  const getGlobalAnnualData = async () => {
+    const globalAnnual = await axiosJWT.get('http://localhost:5000/v1ga',{ 
+       headers: {
+                  Authorization: `Bearer ${token}`
                 }
-            });
-        
-        
-            for(x=0; x<monthly.data.length; ++x){
-                labGM.push(Moment(monthly.data[x].time).format('YYYY'));
-                valGM.push(monthly.data[x].anomalyC);
-            }
-            var chartDatat = {
-                labels: labGM,
-                datasets: [
-                  {
-                    label: 'Annual',
-                    data: labarr.map( (value, index) => valarr[index] ),
-                    borderColor: 'rgb(255, 99, 132)',
-                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                  },
-               
-                  {
-                    label: 'Monthly',
-                    data: labGM.map( (value, index) => valGM[index] ),
-                    borderColor: 'rgb(53, 162, 235)',
-                    backgroundColor: 'rgba(53, 162, 235, 0.5)',
-                  }
-                ],
-              };
-            setChart(chartDatat);
+    });
+
+    const globalMonthly = await axiosJWT.get('http://localhost:5000/v1gm',{ 
+      headers: {
+                  Authorization: `Bearer ${token}`
+                }
+    });
+
+    const northAnnual = await axiosJWT.get('http://localhost:5000/v1na',{ 
+      headers: {
+                Authorization: `Bearer ${token}`
+              }
+    });
+
+    const  northMonthly = await axiosJWT.get('http://localhost:5000/v1nm',{ 
+      headers: {
+                Authorization: `Bearer ${token}`
+              }
+    });
+
+    const southMonthly = await axiosJWT.get('http://localhost:5000/v1sm',{ 
+      headers: {
+                Authorization: `Bearer ${token}`
+              }
+    });
+
+    const southAnnual = await axiosJWT.get('http://localhost:5000/v1sa',{ 
+      headers: {
+                Authorization: `Bearer ${token}`
+              }
+    });  
+    const V2 = await axiosJWT.get('http://localhost:5000/v2',{ 
+      headers: {
+                Authorization: `Bearer ${token}`
+              }
+    });
+    console.log(V2)     
             
-        }
-        const getNorthAnnualData = async () => {
-            Moment.locale('en');
-            const response = await axiosJWT.get('http://localhost:5000/v1na',{ 
-                headers: {
-                Authorization: `Bearer ${token}`
-                }
-            });
-            var labarr = [];
-            var valarr = [];
-    
+    const data = {
+        datasets: [
+                    {
+                      label: 'Global (NH+SH)/2 annual',
+                      data: globalAnnual.data,
+                      parsing: {
+                        xAxisKey: "time",
+                        yAxisKey: "anomalyC",
+                      },
+                      borderColor: 'rgb(255, 99, 132)',
+                      backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                      pointRadius: 1,
+                      options: {
+                        scales: {
+                          x: {
+                              type: 'time',
+                              time: {
+                              unit: 'month'
+                            }},
+                        }
+                      }
+                    },
+                    {
+                      label: 'Global (NH+SH)/2 monthly',
+                      data: globalMonthly.data,
+                      parsing: {
+                        xAxisKey: "time",
+                        yAxisKey: "anomalyC",
+                      },
+                      pointRadius: 1,
+                      borderColor: 'rgb(153, 162, 235)',
+                      backgroundColor: 'rgba(153, 162, 235, 0.5)'
+                    },
+                    {
+                      label: 'Northern hemisphere annual',
+                      data: northAnnual.data,
+                      parsing: {
+                        xAxisKey: "time",
+                        yAxisKey: "anomalyC",
+                      },
+                      pointRadius: 1,
+                      borderColor: 'rgb(253, 62, 235)',
+                      backgroundColor: 'rgba(253, 62, 235, 0.5)',
+                    },
+                    {
+                      label: 'Northern hemisphere monthly',
+                      data: northMonthly.data,
+                      parsing: {
+                        xAxisKey: "time",
+                        yAxisKey: "anomalyC",
+                      },
+                      pointRadius: 1,
+                      borderColor: 'rgb(253, 162, 35)',
+                      backgroundColor: 'rgba(253, 162, 35, 0.5)',
+                    },
+                    {
+                      label: 'Southern hemisphere monthly',
+                      data: southMonthly.data,
+                      borderColor: 'rgb(53, 162, 235)',
+                      parsing: {
+                        xAxisKey: "time",
+                        yAxisKey: "anomalyC",
+                      },
+                      pointRadius: 1,
+                      backgroundColor: 'rgba(53, 162, 235, 0.5)',
+                    },
+                    {
+                      label: 'Southern hemisphere annual',
+                      data: southAnnual.data,
+                      parsing: {
+                        xAxisKey: "time",
+                        yAxisKey: "anomalyC",
+                      },
+                      pointRadius: 1,
+                      borderColor: 'rgb(53, 162, 135)',
+                      backgroundColor: 'rgba(53, 162, 135, 0.5)',
+                    },
+                    {
+                      label: '2000 y ...',
+                      data: V2.data,
+                      parsing: {
+                        xAxisKey: "time",
+                        yAxisKey: "anomalyC",
+                      },
+                      pointRadius: 1,
+                      borderColor: 'rgb(353, 362, 35)',
+                      backgroundColor: 'rgba(353, 362, 35, 0.5)',
+                    }
+                  ],
+                };
 
-            for( var x=0; x<response.data.length; ++x){
-                labarr.push(Moment (response.data[x].time).format('YYYY'));
-                valarr.push(response.data[x].anomalyC);
-            }
-           
-            var chartDatat = {
-                labels: labarr,
-                datasets: [
-                  {
-                    label: 'Annual',
-                    data: labarr.map( (value, index) => valarr[index] ),
-                    borderColor: 'rgb(255, 99, 132)',
-                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                  },
-                ],
-              };
-            setChart2(chartDatat);
-            
-        }
-        const getNorthMonthlylData = async () => {
-            Moment.locale('en');
-            const response = await axiosJWT.get('http://localhost:5000/v1nm',{ 
-                headers: {
-                Authorization: `Bearer ${token}`
-                }
-            });
-            var labarr = [];
-            var valarr = [];
-    
-
-            for( var x=0; x<response.data.length; ++x){
-                labarr.push(Moment (response.data[x].time).format('YYYY'));
-                valarr.push(response.data[x].anomalyC);
-            }
-           
-            var chartDatat = {
-                labels: labarr,
-                datasets: [
-                  {
-                    label: 'Annual',
-                    data: labarr.map( (value, index) => valarr[index] ),
-                    borderColor: 'rgb(255, 99, 132)',
-                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                  },
-                ],
-              };
-            setChart3(chartDatat);
-            
-        }
-        const getSouthAnnualData = async () => {
-            Moment.locale('en');
-            const response = await axiosJWT.get('http://localhost:5000/v1sm',{ 
-                headers: {
-                Authorization: `Bearer ${token}`
-                }
-            });
-            var labarr = [];
-            var valarr = [];
-    
-
-            for( var x=0; x<response.data.length; ++x){
-                labarr.push(Moment (response.data[x].time).format('YYYY'));
-                valarr.push(response.data[x].anomalyC);
-            }
-           
-            var chartDatat = {
-                labels: labarr,
-                datasets: [
-                  {
-                    label: 'Annual',
-                    data: labarr.map( (value, index) => valarr[index] ),
-                    borderColor: 'rgb(255, 99, 132)',
-                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                  },
-                ],
-              };
-            setChart5(chartDatat);
-        
-        }
-        const getSouthMonthlylData = async () => {
-            Moment.locale('en');
-            const response = await axiosJWT.get('http://localhost:5000/v1sm',{ 
-                headers: {
-                Authorization: `Bearer ${token}`
-                }
-            });
-            var labarr = [];
-            var valarr = [];
-    
-
-            for( var x=0; x<response.data.length; ++x){
-                labarr.push(Moment (response.data[x].time).format('YYYY'));
-                valarr.push(response.data[x].anomalyC);
-            }
-           
-            var chartDatat = {
-                labels: labarr,
-                datasets: [
-                  {
-                    label: 'Annual',
-                    data: labarr.map( (value, index) => valarr[index] ),
-                    borderColor: 'rgb(255, 99, 132)',
-                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                  },
-                ],
-              };
-            setChart6(chartDatat);
-        
-        }
-
-    
-        const getUsers = async () => {
-            const response = await axiosJWT.get('http://localhost:5000/users', {
+                setChart(data);
+  }
+              
+  const getUsers = async () => {
+      const response = await axiosJWT.get('http://localhost:5000/users', {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
             setUsers(response.data);
-        }
+  }
         
-            
-        const Logout = async () => {
+  const Logout = async () => {
                 try {
                     await axios.delete('http://localhost:5000/logout');
                     navigate("/")
                 } catch (error) {
                     console.log(error);
                 }
-        }
+  }
+  const [isHovering, setIsHovering] = useState(false);
+
+        const handleMouseOver = () => {
+          setIsHovering(true);
+        };
+      
+        const handleMouseOut = () => {
+          setIsHovering(false);
+        };
 
     useEffect(() => {
          refreshToken();
          getUsers();
          getGlobalAnnualData();
-         getNorthAnnualData();
-         getNorthMonthlylData();
-         getSouthMonthlylData();
-         getSouthAnnualData();
     }, []);
+    const options = {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: "top",
+        },
+        title: {
+          display: true,
+          text: "HadCRUT5"
+        },
+      },
+      scales: {
+        x: {
+          type: "time",
+          time: {
+            displayFormats: {year:"YYYY"},
+            unit: "month"
+            
+          }
+        },
+        
+        yAxis: {
+          type: "linear",
+        },
+      },
+    };
 
-
+  
         return (
-           
-                <><><h1>Welcome Back: {name}</h1>
+            <><div onMouseOver={handleMouseOver} 
+                   onMouseOut={handleMouseOut} 
+                   style={{ height: "150px", width: "200px" }}>
+            <Icon file={kuma} color={"#1DA1F2"} scale={10} 
+                   style={{ height: "100px", width: "100px" }} />
+             {isHovering && (
+          <div>
+            {name}
+             <button onClick={Logout}>Log Out</button>
+          </div>
+        )}
+            </div><><>
                 <Line options={options} data={chartData} />
                 <div>
-                <Line options={options} data={chart2Data} />
-                <Line options={options} data={chart3Data} />
-                <Line options={options} data={chart5Data} />
-                <Line options={options} data={chart6Data} />
-                    <button onClick={Logout}>
-                        Log Out</button>
-                </div><table>
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {users.map((user, index) => (
-                            <tr key={user.id}>
-                                <td>{index + 1}</td>
-                                <td>{user.name}</td>
-                                <td>{user.email}</td>
-                            </tr>
-                        ))}
-
-                    </tbody>
-                </table></><div></div></>  
+                </div></><div></div></></>  
         )
 };
 
