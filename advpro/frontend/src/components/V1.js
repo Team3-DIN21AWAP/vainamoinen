@@ -9,6 +9,9 @@ import {kuma} from "react-3d-icons";
 import Chart from 'chart.js/auto';
 import { Line } from "react-chartjs-2";
 import "chartjs-adapter-luxon";
+import bgVideo from "./PlanetEarthSpinningSpace.mp4"
+import "./index.css";
+
 
   
 const V1 = () => {
@@ -263,21 +266,27 @@ const V1 = () => {
 
   
         return (
-            <><div onMouseOver={handleMouseOver} 
-                   onMouseOut={handleMouseOut} 
-                   style={{ height: "150px", width: "200px" }}>
-            <Icon file={kuma} color={"#1DA1F2"} scale={10} 
-                   style={{ height: "100px", width: "100px" }} />
-             {isHovering && (
-          <div>
-            {name}
-             <button onClick={Logout}>Log Out</button>
-          </div>
-        )}
-            </div><><>
+            <>
+            <video autoPlay muted loop id="background">
+            <source src={bgVideo} type="video/mp4"></source>
+            </video>
+            <div class="content">
+                  <div onMouseOver={handleMouseOver} 
+                        onMouseOut={handleMouseOut} 
+                        style={{ height: "150px", width: "200px" }}>
+                  <Icon file={kuma} color={"#1DA1F2"} scale={10} 
+                        style={{ height: "100px", width: "100px" }} />
+                  {isHovering && (
+                <div>
+                  {name}
+                  <button onClick={Logout}>Log Out</button>
+                </div>
+              )}
+                  </div>
                 <Line options={options} data={chartData} />
                 <div>
-                </div></><div></div></></>  
+                </div>
+            </div>  </>
         )
 };
 
