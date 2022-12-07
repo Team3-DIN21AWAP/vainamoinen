@@ -271,22 +271,20 @@ const V1 = () => {
             <source src={bgVideo} type="video/mp4"></source>
             </video>
             <div class="content">
-                  <div onMouseOver={handleMouseOver} 
+            <div onMouseOver={handleMouseOver} 
                         onMouseOut={handleMouseOut} 
-                        style={{ height: "150px", width: "200px" }}>
-                  <Icon file={kuma} color={"#1DA1F2"} scale={10} 
+                        style={{ height: "100px", width: "100px" }}>
+                        <Icon file={kuma} color={"#1DA1F2"} scale={10} 
                         style={{ height: "100px", width: "100px" }} />
                   {isHovering && (
-                <div>
-                  {name}
-                  <button onClick={Logout}>Log Out</button>
-                </div>
-              )}
+                        <div>
+                          {name}
+                          <button onClick={Logout}>Log Out</button>
+                        </div>)}
                   </div>
                 <Line options={options} data={chartData} />
-                <div>
-                </div>
-            </div>  </>
+            </div> 
+                   </>
         )
 };
 
