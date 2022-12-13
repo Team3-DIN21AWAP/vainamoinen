@@ -18,5 +18,6 @@ router.get('/v1sa', getV1_SA);
 router.get('/v1na', getV1_NA);
 router.delete('/logout', Logout);
 router.get('/v2', getV2);
+router.get('/v6', getV6);
  
 export default router;
