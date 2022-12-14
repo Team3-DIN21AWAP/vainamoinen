@@ -168,7 +168,20 @@ const V6 = () => {
                         </div>)}
                   </div>
                 <Line options={options} data={chartData} />
-                <div id="description"> Here is a description and links</div>
+                <div id="description">
+                    <p>Visualization 6 - Ice core 800k year composite study CO2 measurement.<br>
+                    The line graph uses data from Antarctica Vostok ice cores and extends it with<br>
+                    EPICA Dome C ice core data. Extending the data to the lowest 200 meter of the Dome C <br>
+                    ice core adds two new complete glacial cycles and data from 800,000 years ago. <br>
+                    The graph's Y-axis shows CO2 ppmv and X-axis time.<br>
+                      <br>
+                     <a href="https://www.ncei.noaa.gov/pub/data/paleo/icecore/antarctica/antarctica2015co2composite.txt">Data source.</a><br>
+                      <br>
+                     <a href="https://www.ncei.noaa.gov/access/paleo-search/study/17975">Study.</a><br>
+                      <br>
+                    Bereiter, B., S. Eggleston, J. Schmitt, C. Nehrbass-Ahles, T. F. Stocker, H. Fischer, S. Kipfstuhl, J. Chappellaz. 2015. Revision of the EPICA Dome C CO2 record from 800 to 600 kyr before present. Geophysical Research Letters, 42(2), 542-549. doi: 10.1002/2014GL061957
+                    </p>
+                  </div>
             </div> 
 
                    </>
