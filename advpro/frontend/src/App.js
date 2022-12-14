@@ -4,6 +4,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import V1 from "./components/V1";
 import V6 from "./components/V6";
+import V8 from "./components/V8";
  
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard/>}/>
         <Route path="/v1" element={<V1/>}/>
         <Route path="/v6" element={<V6/>}/>
+        <Route path="/v8" element={<V8/>}/>
       </Routes>
     </Router>
   );
