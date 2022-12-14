@@ -16,6 +16,7 @@ function App() {
         <Route path="/v1" element={<V1/>}/>
         <Route path="/v6" element={<V6/>}/>
         <Route path="/v8" element={<V8/>}/>
+        <Route path="/v5" element={<V5/>}/>
       </Routes>
     </Router>
   );

@@ -5,6 +5,8 @@ import { getV1_GA, getV1_GM, getV1_SM, getV1_SA, getV1_NM, getV1_NA, getV2 } fro
 import { refreshToken } from "../controllers/RefreshToken.js";
 import { getV3a, getV3m, getV41, getV42, getV43 } from "../controllers/V3AndV4.js";
 import { getV6} from "../controllers/V6";
+import {getV5} from "../controllers/V5.js";
+ 
 const router = express.Router();
  
 router.get('/users', verifyToken, getUsers);
@@ -26,4 +28,6 @@ router.get('/v43', getV43);
 router.get('/v2', getV2);
 router.get('/v6', getV6);
 
+router.get('/v5', getV5);
+ 
 export default router;
