@@ -4,7 +4,7 @@ import { verifyToken } from "../middleware/VerifyToken.js";
 import { getV1_GA, getV1_GM, getV1_SM, getV1_SA, getV1_NM, getV1_NA, getV2 } from "../controllers/V1.js";
 import { refreshToken } from "../controllers/RefreshToken.js";
 import { getV3a, getV3m, getV41, getV42, getV43 } from "../controllers/V3AndV4.js";
-
+import { getV6} from "../controllers/V6";
 const router = express.Router();
  
 router.get('/users', verifyToken, getUsers);
