@@ -191,6 +191,7 @@ const V1 = () => {
                     {
                       label: '2000 y ...',
                       data: V2.data,
+                      hidden: true,
                       parsing: {
                         xAxisKey: "time",
                         yAxisKey: "anomalyC",
@@ -198,7 +199,8 @@ const V1 = () => {
                       pointRadius: 1,
                       borderColor: 'rgb(353, 362, 35)',
                       backgroundColor: 'rgba(353, 362, 35, 0.5)',
-                    }
+                    },
+                   
                   ],
                 };
 
@@ -257,7 +259,6 @@ const V1 = () => {
             
           }
         },
-        
         yAxis: {
           type: "linear",
         },

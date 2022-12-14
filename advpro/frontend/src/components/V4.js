@@ -9,11 +9,12 @@ import {kuma} from "react-3d-icons";
 import Chart from 'chart.js/auto';
 import { Line } from "react-chartjs-2";
 import "chartjs-adapter-luxon";
-
+import bgVideo from "./PlanetEarthSpinningSpace.mp4"
+import "./index.css";
 
 
   
-const V7 = () => {
+const V4 = () => {
   const [name, setName] = useState('');
   const [token, setToken] = useCookie('token', '0');
   const [expire, setExpire] = useState('');
@@ -25,7 +26,11 @@ const V7 = () => {
       data: [],
       borderColor: '',
       backgroundColor: '',
-
+      parsing: {
+        xAxisKey: "time",
+        yAxisKey: "value",
+      },
+       pointRadius: 1,
      }
     ],
   });
@@ -63,45 +68,86 @@ const V7 = () => {
       return Promise.reject(error);
   });
 
-  const getGlobalAnnualData = async () => {
-    const GAST = await axiosJWT.get('http://localhost:5000/v71',{ 
+  const chartV3 = async () => {
+    const V3a = await axiosJWT.get('http://localhost:5000/v3a',{ 
        headers: {
                   Authorization: `Bearer ${token}`
                 }
     });
 
-    const CO2 = await axiosJWT.get('http://localhost:5000/v72',{ 
+    const V41 = await axiosJWT.get('http://localhost:5000/v41',{ 
       headers: {
                   Authorization: `Bearer ${token}`
                 }
     });
-    console.log(CO2);
+    const V42 = await axiosJWT.get('http://localhost:5000/v42',{ 
+      headers: {
+                  Authorization: `Bearer ${token}`
+                }
+    });
+    const V43 = await axiosJWT.get('http://localhost:5000/v43',{ 
+      headers: {
+                  Authorization: `Bearer ${token}`
+                }
+    });
 
+         
+            
     const data = {
         datasets: [
                     {
-                      label: 'GAST',
-                      yAxisID: 'y',
-                      data: GAST.data,
+                      label: 'Global (NH+SH)/2 annual',
+                      data: V3a.data,
                       parsing: {
-                        xAxisKey: "time",
-                        yAxisKey: "temp",
+                        xAxisKey: "year",
+                        yAxisKey: "mean",
                       },
                       borderColor: 'rgb(255, 99, 132)',
                       backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                      
+                      pointRadius: 1,
+                      options: {
+                        scales: {
+                          x: {
+                              type: 'time',
+                              time: {
+                              unit: 'month'
+                            }},
+                        }
+                      }
                     },
                     {
-                      label: 'CO2',
-                      yAxisID: 'y1',
-                      data: CO2.data,
+                      label: 'Global (NH+SH)/2 monthly',
+                      data: V41.data,
                       parsing: {
-                        xAxisKey: "time",
+                        xAxisKey: "year",
                         yAxisKey: "co2",
                       },
+                      pointRadius: 1,
                       borderColor: 'rgb(153, 162, 235)',
                       backgroundColor: 'rgba(153, 162, 235, 0.5)'
-                    }
+                    },
+                    {
+                        label: 'Global (NH+SH)/2 monthly',
+                        data: V42.data,
+                        parsing: {
+                          xAxisKey: "year",
+                          yAxisKey: "co2",
+                        },
+                        pointRadius: 1,
+                        borderColor: 'rgb(253, 162, 135)',
+                        backgroundColor: 'rgba(253, 162, 135, 0.5)'
+                      },
+                      {
+                        label: 'Global (NH+SH)/2 monthly',
+                        data: V43.data,
+                        parsing: {
+                          xAxisKey: "year",
+                          yAxisKey: "co2",
+                        },
+                        pointRadius: 1,
+                        borderColor: 'rgb(353, 162, 235)',
+                        backgroundColor: 'rgba(353, 162, 235, 0.5)'
+                      }
                   ],
                 };
 
@@ -138,54 +184,39 @@ const V7 = () => {
     useEffect(() => {
          refreshToken();
          getUsers();
-         getGlobalAnnualData();
+         chartV3();
     }, []);
     const options = {
-        responsive: true,
-        interaction: {
-          mode: 'index',
-          intersect: false,
+      responsive: true,
+      plugins: {
+        legend: {
+          position: "top",
         },
-        stacked: false,
-        plugins: {
-          legend: {
-            position: "top",
-          },
-          title: {
-            display: true,
-            text: "GAST and CO2"
-          },
+        title: {
+          display: true,
+          text: "HadCRUT5"
         },
-        scales: {
-          x: {
-            type: "linear"
-            },
-          y: {
-            type: 'linear',
-            display: true,
-            position: 'left',
-          },
-          y1: {
-            type: 'linear',
-            display: true,
-            position: 'right',
-    
-            // grid line settings
-            grid: {
-              drawOnChartArea: false, // only want the grid lines for one axis to show up
-            },
-          },
-            }
+      },
+      scales: {
+        x: {
+          type: "time",
+          time: {
+            displayFormats: {year:"YYYY"},
+            unit: "month"
+            
+          }
+        },
         
+        yAxis: {
+          type: "linear",
+        },
+      },
     };
 
   
         return (
             <>
-            {/*<video autoPlay muted loop id="background">
-            <source src={bgVideo} type="video/mp4"></source>
-        </video>*/}
-            <div>
+            <div clas>
             <div onMouseOver={handleMouseOver} 
                         onMouseOut={handleMouseOut} 
                         style={{ height: "100px", width: "100px" }}>
@@ -203,4 +234,4 @@ const V7 = () => {
         )
 };
 
-export default V7
+export default V4

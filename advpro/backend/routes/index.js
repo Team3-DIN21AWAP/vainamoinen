@@ -7,6 +7,7 @@ import { getV71, getV72 } from "../controllers/V7.js";
 import { getV5 } from "../controllers/V5.js";
 import { getV10 } from "../controllers/V10.js";
 import { refreshToken } from "../controllers/RefreshToken.js";
+import { getV3a, getV3m, getV41, getV42, getV43 } from "../controllers/V3AndV4.js";
  
 const router = express.Router();
  
@@ -26,4 +27,9 @@ router.get('/v71', getV71);
 router.get('/v72', getV72);
 router.get('/v5', getV5);
 router.get('/v10', getV10);
+router.get('/v3a', getV3a);
+router.get('/v3m', getV3m);
+router.get('/v41', getV41);
+router.get('/v42', getV42);
+router.get('/v43', getV43);
 export default router;

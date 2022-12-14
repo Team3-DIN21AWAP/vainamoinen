@@ -6,29 +6,33 @@ import useCookie from 'react-use-cookie';
 import Moment from 'moment';
 import {Icon} from "react-3d-icons";
 import {kuma} from "react-3d-icons";
-import Chart from 'chart.js/auto';
+import Chart, { Ticks } from 'chart.js/auto';
 import { Line } from "react-chartjs-2";
 import "chartjs-adapter-luxon";
+import "./index.css";
 
-
-
-  
-const V7 = () => {
-  const [name, setName] = useState('');
-  const [token, setToken] = useCookie('token', '0');
-  const [expire, setExpire] = useState('');
-  const [users, setUsers] = useState([]);
-  const [chartData, setChart] = useState({
+const V8 = () => {
+   
+    const [name, setName] = useState('');
+    const [token, setToken] = useCookie('token', '0');
+    const [expire, setExpire] = useState('');
+    const [users, setUsers] = useState([]);
+    const [chartData, setChart] = useState({
     datasets: [
     {
       label: '',
       data: [],
       borderColor: '',
       backgroundColor: '',
-
+      parsing: {
+        xAxisKey: "",
+        yAxisKey: "",
+      },
+       pointRadius: 1,
      }
     ],
   });
+
     
   const navigate = useNavigate();
         
@@ -63,50 +67,9 @@ const V7 = () => {
       return Promise.reject(error);
   });
 
-  const getGlobalAnnualData = async () => {
-    const GAST = await axiosJWT.get('http://localhost:5000/v71',{ 
-       headers: {
-                  Authorization: `Bearer ${token}`
-                }
-    });
-
-    const CO2 = await axiosJWT.get('http://localhost:5000/v72',{ 
-      headers: {
-                  Authorization: `Bearer ${token}`
-                }
-    });
-    console.log(CO2);
-
-    const data = {
-        datasets: [
-                    {
-                      label: 'GAST',
-                      yAxisID: 'y',
-                      data: GAST.data,
-                      parsing: {
-                        xAxisKey: "time",
-                        yAxisKey: "temp",
-                      },
-                      borderColor: 'rgb(255, 99, 132)',
-                      backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                      
-                    },
-                    {
-                      label: 'CO2',
-                      yAxisID: 'y1',
-                      data: CO2.data,
-                      parsing: {
-                        xAxisKey: "time",
-                        yAxisKey: "co2",
-                      },
-                      borderColor: 'rgb(153, 162, 235)',
-                      backgroundColor: 'rgba(153, 162, 235, 0.5)'
-                    }
-                  ],
-                };
-
-                setChart(data);
-  }
+  const V8Data = require("./V8.json");
+  console.log(V8Data);
+  
               
   const getUsers = async () => {
       const response = await axiosJWT.get('http://localhost:5000/users', {
@@ -135,57 +98,75 @@ const V7 = () => {
           setIsHovering(false);
         };
 
+        var converted  = false;
+
     useEffect(() => {
          refreshToken();
-         getUsers();
-         getGlobalAnnualData();
+         getUsers(); 
+         var setData = { datasets: []};
+         if(!converted) {
+          for(var i = 0; i < V8Data.length; i++) {
+            var o = V8Data[i];
+            var oldyear = o["year"];
+            o["year"] = new Date(oldyear+'-01-01T00:00:00');
+          }
+          converted = true;
+        }
+        const obj = V8Data[0];
+        var R = 0;
+        var RV = R;
+        for(var k in obj ){
+            if(k === "year") continue;
+            else{
+              for(var i = 0; i < V8Data.length; i++) {
+                var o = V8Data[i];
+                var oldvalue = o[k];
+                o[k] = oldvalue * 3.664;
+              }
+              R += 5;
+              RV = R%255;
+                setData.datasets.push(
+                    {
+                        label: k,
+                        data: V8Data,
+                        parsing: {
+                            xAxisKey: "year",
+                            yAxisKey: k,	
+                        },
+                        borderColor: 'rgb('+RV.toString()+', 99, 132)',
+                        backgroundColor: 'rgba('+RV.toString()+', 99, 132, 0.5)',
+                        pointRadius: 0.1,
+                    });
+                    
+            }
+        }
+        setChart(setData);
     }, []);
     const options = {
-        responsive: true,
-        interaction: {
-          mode: 'index',
-          intersect: false,
+      responsive: true,
+      plugins: {
+        legend: {
+          position: "top",
         },
-        stacked: false,
-        plugins: {
-          legend: {
-            position: "top",
-          },
-          title: {
-            display: true,
-            text: "GAST and CO2"
-          },
+        title: {
+          display: true,
+          text: "CO2 emissions by country"
         },
-        scales: {
-          x: {
-            type: "linear"
-            },
-          y: {
-            type: 'linear',
-            display: true,
-            position: 'left',
+      },
+      scales: {
+        x: {
+          type: "timeseries"
           },
-          y1: {
-            type: 'linear',
-            display: true,
-            position: 'right',
-    
-            // grid line settings
-            grid: {
-              drawOnChartArea: false, // only want the grid lines for one axis to show up
-            },
-          },
-            }
-        
+        yAxis: {
+          type: "linear"
+        },
+      },
     };
 
   
         return (
             <>
-            {/*<video autoPlay muted loop id="background">
-            <source src={bgVideo} type="video/mp4"></source>
-        </video>*/}
-            <div>
+            <div >
             <div onMouseOver={handleMouseOver} 
                         onMouseOut={handleMouseOut} 
                         style={{ height: "100px", width: "100px" }}>
@@ -203,4 +184,4 @@ const V7 = () => {
         )
 };
 
-export default V7
+export default V8;
