@@ -3,10 +3,13 @@ import axios from 'axios';
 import jwt_decode from "jwt-decode";
 import {useNavigate} from 'react-router-dom';
 import useCookie from 'react-use-cookie';
+import Moment from 'moment';
 import {Icon} from "react-3d-icons";
 import {kuma} from "react-3d-icons";
+import Chart from 'chart.js/auto';
 import { Line } from "react-chartjs-2";
 import "chartjs-adapter-luxon";
+import bgVideo from "./PlanetEarthSpinningSpace.mp4"
 import "./index.css";
 
 
@@ -167,9 +170,7 @@ const V5 = () => {
                         </div>)}
                   </div>
                 <Line options={options} data={chartData} />
-                <div id="description"> Here is a description and links</div>
             </div> 
-
                    </>
         )
 };

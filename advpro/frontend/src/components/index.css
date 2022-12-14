@@ -10,13 +10,8 @@
   .content {
     position: fixed;
     bottom: 0;
-    background: rgba(209, 200, 200, 0.5);
+    background: rgba(0, 0, 0, 0.5);
     color: #f1f1f1;
     width: 100%;
     padding: 20px;
-  }
-
-  #description {
-    color: black;
-    font-family: Comic Sans;
   }

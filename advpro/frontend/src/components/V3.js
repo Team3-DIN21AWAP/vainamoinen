@@ -162,7 +162,7 @@ const V3 = () => {
         },
         title: {
           display: true,
-          text: "Data"
+          text: "HadCRUT5"
         },
       },
       scales: {

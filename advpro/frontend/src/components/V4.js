@@ -95,16 +95,16 @@ const V4 = () => {
             
     const data = {
         datasets: [
-                      {
-                        label: 'Antarctic Ice Core CO2 1',
-                        data: V41.data,
-                        parsing: {
-                          xAxisKey: "year",
-                          yAxisKey: "co2",
-                        },
-                        pointRadius: 1,
-                        borderColor: 'rgb(153, 162, 235)',
-                        backgroundColor: 'rgba(153, 162, 235, 0.5)',
+                    {
+                      label: 'Antarctic Ice Core CO2 1',
+                      data: V3a.data,
+                      parsing: {
+                        xAxisKey: "year",
+                        yAxisKey: "mean",
+                      },
+                      borderColor: 'rgb(255, 99, 132)',
+                      backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                      pointRadius: 1,
                       options: {
                         scales: {
                           x: {
@@ -115,9 +115,19 @@ const V4 = () => {
                         }
                       }
                     },
-                    
                     {
-                        label: 'Antarctic Ice Core CO2 2',
+                      label: 'Antarctic Ice Core CO2 2',
+                      data: V41.data,
+                      parsing: {
+                        xAxisKey: "year",
+                        yAxisKey: "co2",
+                      },
+                      pointRadius: 1,
+                      borderColor: 'rgb(153, 162, 235)',
+                      backgroundColor: 'rgba(153, 162, 235, 0.5)'
+                    },
+                    {
+                        label: 'Global (NH+SH)/2 monthly',
                         data: V42.data,
                         parsing: {
                           xAxisKey: "year",
@@ -184,7 +194,8 @@ const V4 = () => {
         },
         title: {
           display: true,
-          text: "data"
+          text: "HadCRUT5"
+
         },
       },
       scales: {
