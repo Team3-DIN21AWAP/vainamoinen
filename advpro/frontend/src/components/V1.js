@@ -277,6 +277,81 @@ const V1 = () => {
             </div><><>
                 <Line options={options} data={chartData} />
                 <div>
+                  <p> Visualization 1 - Global historical surface temperature anomalies from January 1850 onwards.<br>
+                      This line graph has three different toggleable dataset options for both annual and monthly scatter.<br><br><br>
+                      The data is divised to Northern hemisphere, Southern hemisphere and Global (two prior combined).<br><br>
+                      The graph's Y-axis shows temperature and X-axis time.<br>
+                      <br>
+                      Data sources:<br>
+                      <br>
+                      Global monthly:<br>
+                      https://www.metoffice.gov.uk/hadobs/hadcrut5/data/current/analysis/diagnostics/HadCRUT.5.0.1.0.analysis.summary_series.global.monthly.csv<br>
+                      <br>
+                      Global annual:<br>
+                      https://www.metoffice.gov.uk/hadobs/hadcrut5/data/current/analysis/diagnostics/HadCRUT.5.0.1.0.analysis.summary_series.global.annual.csv<br>
+                      <br>
+                      Northern hemisphere monthly:<br>
+                      https://www.metoffice.gov.uk/hadobs/hadcrut5/data/current/analysis/diagnostics/HadCRUT.5.0.1.0.analysis.summary_series.northern_hemisphere.monthly.csv<br>
+                      <br>
+                      Northern hemisphere annual:<br>
+                      https://www.metoffice.gov.uk/hadobs/hadcrut5/data/current/analysis/diagnostics/HadCRUT.5.0.1.0.analysis.summary_series.northern_hemisphere.annual.csv<br>
+                      <br>
+                      Southern hemisphere monthly:<br>
+                      https://www.metoffice.gov.uk/hadobs/hadcrut5/data/current/analysis/diagnostics/HadCRUT.5.0.1.0.analysis.summary_series.southern_hemisphere.monthly.csv<br>
+                      <br>
+                      Southern hemisphere annual:<br>
+                      https://www.metoffice.gov.uk/hadobs/hadcrut5/data/current/analysis/diagnostics/HadCRUT.5.0.1.0.analysis.summary_series.southern_hemisphere.annual.csv<br>
+                      <br>
+                      Further reading and reference:<br>
+                      <br>
+                      Morice, C.P., J.J. Kennedy, N.A. Rayner, J.P. Winn, E. Hogan, R.E. Killick, R.J.H. Dunn, T.J. Osborn, P.D. Jones and I.R. Simpson (in press) An updated assessment of near-surface temperature change from 1850: the HadCRUT5 dataset. Journal of Geophysical Research (Atmospheres)<br> doi:10.1029/2019JD032361 (supporting information).
+                      <a href="https://www.metoffice.gov.uk/hadobs/hadcrut5/HadCRUT5_accepted.pdf">https://www.metoffice.gov.uk/hadobs/hadcrut5/HadCRUT5_accepted.pdf</a><br>
+                      <br>
+                      Met Office Hadley Centre observations datasets<br>
+                      <a href="https://www.metoffice.gov.uk/hadobs/hadcrut5/">https://www.metoffice.gov.uk/hadobs/hadcrut5/</a><br>
+<br><br><br>
+
+                      Visualization 2 - Northern hemisphere 2,000-year temperature reconstruction. The visualization extends the V1 graph,<br>
+                      providing a toggleable option to the line graph, which shows a reconstruction model of the temperature shift of the <br>
+                      Northern hemisphere over the period of 1,979 years. The graph's Y-axis shows temperature and X-axis time.<br>
+                      The data is calculated by combining low-resolution proxies with tree-ring data, using a wavelet transform technique<br>
+                      to achieve timescale-dependent processing of the data.<br>
+<br>
+                      Further reading and reference:<br>
+<br>
+                      Full study:<br>
+                      <a href="https://www.ncei.noaa.gov/pub/data/paleo/contributions_by_author/moberg2005/nhtemp-moberg2005.txt">https://www.ncei.noaa.gov/pub/data/paleo/contributions_by_author/moberg2005/nhtemp-moberg2005.txt</a>
+<br>
+                      Dataset contributors:<br>
+                      Anders Moberg, Stockholm University<br>
+                      IGBP PAGES/WDCA CONTRIBUTION SERIES NUMBER: 2005-019<br>
+<br><br>
+
+                      Moberg, A., et al. 2005. <br>
+                      2,000-Year Northern Hemisphere Temperature Reconstruction. <br>
+                      IGBP PAGES/World Data Center for Paleoclimatology <br>
+                      Data Contribution Series # 2005-019.<br>
+                      NOAA/NGDC Paleoclimatology Program, Boulder CO, USA.<br>
+<br><br>
+
+                      ORIGINAL REFERENCE: <br>
+                      Moberg, A., D.M. Sonechkin, K. Holmgren, N.M. Datsenko and W. Karlén. 2005. <br>
+                      Highly variable Northern Hemisphere temperatures reconstructed from low- <br>
+                      and high-resolution proxy data.<br>
+                      Nature, Vol. 433, No. 7026, pp. 613-617, 10 February 2005. <br>
+<br>
+                      Article:<br>
+                      <a href="https://www.nature.com/articles/nature03265">https://www.nature.com/articles/nature03265</a><br>
+<br>
+                      Study research page:<br>
+                      <a href="https://bolin.su.se/data/moberg-2012-nh-1?n=moberg-2005">https://bolin.su.se/data/moberg-2012-nh-1?n=moberg-2005</a><br><br>
+                      Anders Moberg, Dmitry M. Sonechkin, Karin Holmgren, Nina M. Datsenko, Wibjörn Karlén (2005) 2,000-Year Northern Hemisphere Temperature Reconstruction. IGBP PAGES/World Data Center for Paleoclimatology Data Contribution Series # 2005-019. NOAA/NGDC Paleoclimatology Program, Boulder CO, USA. <br>
+                      <a href="https://www.ncdc.noaa.gov/paleo/study/6267">https://www.ncdc.noaa.gov/paleo/study/6267</a><br>
+                      Moberg, A., D.M. Sonechkin, K. Holmgren, N.M. Datsenko and W. Karlén. 2005. Highly variable Northern Hemisphere temperatures reconstructed from low- and high-resolution proxy data. Nature, Vol. 433, No. 7026, pp. 613-617, 10 February 2005.<br><br>
+                      </p>
+
+
+                
                 </div></><div></div></></>  
         )
 };
