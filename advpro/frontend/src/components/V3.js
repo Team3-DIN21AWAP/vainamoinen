@@ -197,6 +197,29 @@ const V3 = () => {
                         </div>)}
                   </div>
                 <Line options={options} data={chartData} />
+                  <div>
+                  <p>Visualization 3 - Atmospheric CO2 concentrations from Mauna Loa measurements starting 1958.<br>
+                  The line graph is toggleable to either annual or monthly data showing mean CO2 levels in the air<br>
+                  as measured from the top of a 38m tall tower next to the Mauna Lua Observatory, Hawaii.<br>
+                  As such the dataset constitutes the longest record of direct measurements of CO2 in the atmosphere.<br>
+                  The graph's Y-axis shows CO2 ppm and X-axis time. A note about data obtainment:<br>
+                  Data from March 1958 through April 1974 have been obtained by C. David Keeling<br>
+                  of the Scripps Institution of Oceanography (SIO) and were obtained from the<br>
+                  Scripps website (scrippsco2.ucsd.edu).<br>
+<br>
+                  Data source:<br>
+                  <a href="https://gml.noaa.gov/ccgg/trends/data.html">https://gml.noaa.gov/ccgg/trends/data.html</a><br>
+                  Monthly:<br>
+                  <a href="https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_mm_mlo.csv">https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_mm_mlo.csv</a><br>
+                  Annual:<br>
+                  <a href="https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_annmean_mlo.csv">https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_annmean_mlo.csv</a><br>
+<br>
+                  Measurement description:<br>
+                  <a href="https://gml.noaa.gov/ccgg/about/co2_measurements.html">https://gml.noaa.gov/ccgg/about/co2_measurements.html</a><br>
+<br>
+                  Dr. Pieter Tans, NOAA/GML (gml.noaa.gov/ccgg/trends/) and Dr. Ralph Keeling, Scripps Institution of Oceanography (scrippsco2.ucsd.edu/).<br>
+                  </p>
+                  </div>
             </div> 
                    </>
         )
