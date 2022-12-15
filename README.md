@@ -7,5 +7,5 @@ Henry “Caatius” Gill
 Maarit “maaritlo” Logren  
 Moufida “mufidA Dkhili EP Alakulju  
 Santtu “SanttuSaleva” Sälevä  
-## Link to vedio demo 
+## Link to video demo 
 https://youtu.be/f7l-9rLa3HU
