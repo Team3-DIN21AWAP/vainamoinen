@@ -198,6 +198,22 @@ const V7 = () => {
                         </div>)}
                   </div>
                 <Line options={options} data={chartData} />
+                  <div>
+                      <p>Visualization 7 - Evolution of global temperature over the past two million years. The multiaxis line graph uses data from Change in <br>
+                        Global Average Surface Temperature (GAST) 50% credible interval and atmospheric CO2 levels. The graph's left Y-axis shows temperature change, <br>
+                        X-axis represents time and the right Y2-axis show CO2 level.<br>
+<br>
+                        Publication letter:<br>
+                        https://climate.fas.harvard.edu/files/climate/files/snyder_2016.pdf<br>
+<br>
+                        Data source:<br>
+                        http://carolynsnyder.com/publications.php on that page http://carolynsnyder.com/papers/Snyder_Data_Figures.zip which is found under "Source data for Figures".<br>
+<br>
+<br>
+                        Snyder, C. Evolution of global temperature over the past two million years. Nature 538, 226–228 (2016). https://doi.org/10.1038/nature19798<br>
+                  <br>
+                      </p>
+                  </div>
             </div> 
                    </>
         )
