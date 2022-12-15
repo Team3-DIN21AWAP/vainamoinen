@@ -170,6 +170,21 @@ const V5 = () => {
                         </div>)}
                   </div>
                 <Line options={options} data={chartData} />
+                  <div>
+                      <p>Visualization 5 - Vostok Ice Core CO2 measurements, 417160 - 2342 years. The line graph displays the annual CO2 data of ice core samples.<br>
+                      The derived samples were obtained at Vostok, East Antarctica, reaching a depth of 3,623 meters. The graph's Y-axis shows CO2 ppm and X-axis<br>
+                      time. The data indicates four different climate cycles.<br>
+<br>
+                      Data source:<br>
+                      <a href="https://cdiac.ess-dive.lbl.gov/ftp/trends/co2/vostok.icecore.co2">https://cdiac.ess-dive.lbl.gov/ftp/trends/co2/vostok.icecore.co2</a><br>
+<br>
+                      Research and method information:<br>
+                      <a href="https://cdiac.ess-dive.lbl.gov/trends/co2/vostok.html">https://cdiac.ess-dive.lbl.gov/trends/co2/vostok.html</a><br>
+<br>
+                      Barnola, J.-M., D. Raynaud, C. Lorius, and N.I. Barkov. 2003. Historical CO2 record from the Vostok ice core. In Trends: A Compendium of Data on Global Change. Carbon Dioxide Information Analysis Center, Oak Ridge National Laboratory, U.S. Department of Energy, Oak Ridge, Tenn., U.S.A.<br>
+<br>
+                      </p>
+                  </div>
             </div> 
                    </>
         )
