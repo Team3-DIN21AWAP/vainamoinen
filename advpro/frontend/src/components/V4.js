@@ -230,6 +230,21 @@ const V4 = () => {
                         </div>)}
                   </div>
                 <Line options={options} data={chartData} />
+                  <div>
+                      <p>Visualization 4 - Antarctic Ice Core records of atmospheric CO2 ratios combined with Mauna Loa measurements<br>
+                      The line graph displays the annual data of three ice core samples and the CO2 measurements of Mauna Loa Observatory.<br>
+                      The graph's Y-axis shows CO2 ppm and X-axis time. The derived ice core samples were obtained at Law Dome, East Antarctica<br>
+                      from 1987 to 1993. For information about Mauna Loa Observatory measurements, please read above (Visualization 3).<br>
+<br>
+                      Data source:<br>
+                      <a href="https://cdiac.ess-dive.lbl.gov/ftp/trends/co2/lawdome.combined.dat">https://cdiac.ess-dive.lbl.gov/ftp/trends/co2/lawdome.combined.dat</a><br>
+<br>
+                      Research and method information:<br>
+                      <a href="https://cdiac.ess-dive.lbl.gov/trends/co2/lawdome.html">https://cdiac.ess-dive.lbl.gov/trends/co2/lawdome.html</a><br>
+<br>
+                      D.M. Etheridge, L.P. Steele, R.L. Langenfelds, R.J. Francey, J.-M. Barnola and V.I. Morgan. 1998. Historical CO2 records from the Law Dome DE08, DE08-2, and DSS ice cores. In Trends: A Compendium of Data on Global Change. Carbon Dioxide Information Analysis Center, Oak Ridge National Laboratory, U.S.<br> Department of Energy, Oak Ridge, Tenn., U.S.A.
+                      </p>
+                  </div>
             </div> 
                    </>
         )
